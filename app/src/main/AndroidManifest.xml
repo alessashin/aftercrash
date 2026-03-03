@@ -10,9 +10,61 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Asslen45"
-        >
-
+        android:theme="@style/Theme.Asslen45">
+        <activity
+            android:name=".BottomNavigation"
+            android:exported="false" />
+        <activity
+            android:name=".Dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".Kryhsiame"
+            android:exported="false" />
+        <activity
+            android:name=".Darwin"
+            android:exported="false" />
+        <activity
+            android:name=".Jade"
+            android:exported="false" />
+        <activity
+            android:name=".Jamol"
+            android:exported="false" />
+        <activity
+            android:name=".Andre"
+            android:exported="false" />
+        <activity
+            android:name=".Dakme"
+            android:exported="false" />
+        <activity
+            android:name=".Aslen"
+            android:exported="false" />
+        <activity
+            android:name=".Shaleh"
+            android:exported="false" />
+        <activity
+            android:name=".Phone"
+            android:exported="false" />
+        <activity
+            android:name=".Facetime"
+            android:exported="false" />
+        <activity
+            android:name=".Youtube"
+            android:exported="false" />
+        <activity
+            android:name=".Tiktok"
+            android:exported="false" />
+        <activity
+            android:name=".Pinterest"
+            android:exported="false" />
+        <activity
+            android:name=".Instagram"
+            android:exported="false" />
+        <activity
+            android:name=".Facebook"
+            android:exported="false" />
+        <activity
+            android:name=".GoogleMap"
+            android:exported="false" />
         <activity
             android:name=".Activity2Assh"
             android:exported="false" />
@@ -25,11 +77,10 @@
             android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
-
-
         </activity>
     </application>
+
 </manifest>

@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         androidx.core.splashscreen.SplashScreen splashScreen = androidx.core.splashscreen.SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
+
 
 
         new Handler().postDelayed(new Runnable() {
@@ -20,6 +20,6 @@ public class SplashScreen extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 3000); //ex 3000 = 3 seconds
+        }, 4000); //ex 3000 = 3 seconds
     }
 }
