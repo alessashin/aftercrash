@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ImageView; // for menu
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +16,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.splashscreen.SplashScreen;
+import androidx.core.view.GravityCompat; //sidebar
+import androidx.drawerlayout.widget.DrawerLayout; // for sidebar
+import com.google.android.material.navigation.NavigationView;
 
-import android.view.View;
+
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment; // Added this import to fix crash
+import androidx.navigation.ui.NavigationUI;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     // 1. Changed to 'button' to match your instructions/usage
@@ -29,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public RelativeLayout myDashboard;
 
 
+    // Sidebar variables
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
 
 
@@ -36,44 +48,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         // Splash screen setup
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
-
         super.onCreate(savedInstanceState);
 
+
         //fullscreen
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
-
-
-          //binding
-
-
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Keep splash on screen for 5 seconds
+
+
+        // Sidebar Setup
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.navigationView);
+        ImageView imageMenu = findViewById(R.id.imageMenu);
+
+        // Opening Drawer
+        imageMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        // Setup Navigation Controller - Fixed to prevent IllegalStateException crash
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_container_main);
+        
+        if (navHostFragment != null) {
+            NavController navController = navHostFragment.getNavController();
+            NavigationUI.setupWithNavController(navigationView, navController);
+
+            navigationView.setNavigationItemSelectedListener(item -> {
+                int id = item.getItemId();
+                View fragmentContainer = findViewById(R.id.fragment_container_main);
+                
+                if (id == R.id.nav_home) {
+                    // Hide fragments to show dashboard
+                    fragmentContainer.setVisibility(View.GONE);
+                } else {
+                    // Show fragment container for other items
+                    fragmentContainer.setVisibility(View.VISIBLE);
+                    NavigationUI.onNavDestinationSelected(item, navController);
+                }
+                
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            });
+        }
+
+
+        //splashscreen
         splashScreen.setKeepOnScreenCondition(() -> keepSplash);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             keepSplash = false;
         }, 5000);
 
-        // Handle System Bars (Moved inside onCreate) according to gemini
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawerLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+//button
+        button = findViewById(R.id.buttonNext);
+        button.setOnClickListener(v -> openActivity2Assh());
 
-        //  Button Initialization
-        button = (Button) findViewById(R.id.buttonNext);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity2Assh();  }
-        });
-//cards
+        initCards();
+    }
+
+
+
+
+    private void initCards() {
         cgooglemap = findViewById(R.id.Cgooglemap);
         cfacebook = findViewById(R.id.cfacebook);
         cinstagram = findViewById(R.id.cinstagram);
@@ -116,16 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //dashboard
         myDashboard = findViewById(R.id.Asshlene);
         myDashboard.setOnClickListener(this);
-
-
-
-
-
-
-
     }
 
-    // button code
     public void openActivity2Assh() {
         Intent intent = new Intent(this, Activity2Assh.class);
         startActivity(intent);
@@ -134,57 +169,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
-
-        if (id == R.id.Cgooglemap) {
-            Intent i = new Intent(this, GoogleMap.class);
-            startActivity(i);
-        } else if (id == R.id.cfacebook) {
-            Intent i = new Intent(this, Facebook.class);
-            startActivity(i);
-        } else if (id == R.id.cinstagram) {
-            Intent i = new Intent(this, Instagram.class);
-            startActivity(i);
-        } else if (id == R.id.ctiktok) {
-            Intent i = new Intent(this, Tiktok.class);
-            startActivity(i);
-        } else if (id == R.id.cpinterest) {
-            Intent i = new Intent(this, Pinterest.class);
-            startActivity(i);
-        } else if (id == R.id.cyoutube) {
-            Intent i = new Intent(this, Youtube.class);
-            startActivity(i);
-        } else if (id == R.id.cfacetime) {
-            Intent i = new Intent(this, Facetime.class);
-            startActivity(i);
-        } else if (id == R.id.cphone) {
-            Intent i = new Intent(this, Phone.class);
-            startActivity(i);
-        } else if (id == R.id.cshaleh) {
-            Intent i = new Intent(this, Shaleh.class);
-            startActivity(i);
-        } else if (id == R.id.cdakme) {
-            Intent i = new Intent(this, Dakme.class);
-            startActivity(i);
-        } else if (id == R.id.caslen) {
-            Intent i = new Intent(this, Aslen.class);
-            startActivity(i);
-        } else if (id == R.id.candre) {
-            Intent i = new Intent(this, Andre.class);
-            startActivity(i);
-        } else if (id == R.id.cjamol) {
-            Intent i = new Intent(this, Jamol.class);
-            startActivity(i);
-        } else if (id == R.id.cdarwin) {
-            Intent i = new Intent(this, Darwin.class);
-            startActivity(i);
-        } else if (id == R.id.ckryshiame) {
-            Intent i = new Intent(this, Kryhsiame.class);
-            startActivity(i);
-        } else if (id == R.id.cjade) {
-            Intent i = new Intent(this, Jade.class);
-            startActivity(i);
-        } else if (id == R.id.Asshlene) {
-            Intent i = new Intent(this, Dashboard.class);
-            startActivity(i);
+        if (id == R.id.Cgooglemap) startActivity(new Intent(this, GoogleMap.class));
+        else if (id == R.id.cfacebook) startActivity(new Intent(this, Facebook.class));
+        else if (id == R.id.cinstagram) startActivity(new Intent(this, Instagram.class));
+        else if (id == R.id.ctiktok) startActivity(new Intent(this, Tiktok.class));
+        else if (id == R.id.cpinterest) startActivity(new Intent(this, Pinterest.class));
+        else if (id == R.id.cyoutube) startActivity(new Intent(this, Youtube.class));
+        else if (id == R.id.cfacetime) startActivity(new Intent(this, Facetime.class));
+        else if (id == R.id.cphone) startActivity(new Intent(this, Phone.class));
+        else if (id == R.id.cshaleh) startActivity(new Intent(this, Shaleh.class));
+        else if (id == R.id.cdakme) startActivity(new Intent(this, Dakme.class));
+        else if (id == R.id.caslen) startActivity(new Intent(this, Aslen.class));
+        else if (id == R.id.candre) startActivity(new Intent(this, Andre.class));
+        else if (id == R.id.cjamol) startActivity(new Intent(this, Jamol.class));
+        else if (id == R.id.cdarwin) startActivity(new Intent(this, Darwin.class));
+        else if (id == R.id.ckryshiame) startActivity(new Intent(this, Kryhsiame.class));
+        else if (id == R.id.cjade) startActivity(new Intent(this, Jade.class));
+        else if (id == R.id.Asshlene) startActivity(new Intent(this, Dashboard.class));
     }
-}}
+}
