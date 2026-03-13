@@ -92,7 +92,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             });
+
+
         }
+
+
+
 
 
         //splashscreen
@@ -123,8 +128,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ctiktok= findViewById(R.id.ctiktok);
         cpinterest =findViewById(R.id.cpinterest);
         cyoutube = findViewById(R.id.cyoutube);
-        cfacetime = findViewById(R.id.cfacetime);
-        cphone = findViewById(R.id.cphone);
+       cfacetime = findViewById(R.id.cfacetime);
+       cphone = findViewById(R.id.cphone);
 //profile
         cshaleh = findViewById(R.id.cshaleh);
         cdakme = findViewById(R.id.cdakme);

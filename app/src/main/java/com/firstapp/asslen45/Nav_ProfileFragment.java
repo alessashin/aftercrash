@@ -1,64 +1,60 @@
 package com.firstapp.asslen45;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Nav_ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Nav_ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String CHANNEL_ID = "channel_id";
 
     public Nav_ProfileFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Nav_ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Nav_ProfileFragment newInstance(String param1, String param2) {
-        Nav_ProfileFragment fragment = new Nav_ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav__profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_nav__profile, container, false);
+
+        Button btnPushNotification = view.findViewById(R.id.btn_push_notification);
+
+        if (btnPushNotification != null) {
+            btnPushNotification.setOnClickListener(v -> showNotification());
+        }
+
+        return view;
+    }
+
+    private void showNotification() {
+        if (getActivity() == null) return;
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager != null) {
+            // Required for Android 8.0 (Oreo) and higher
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                notificationManager.createNotificationChannel(channel);
+            }
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(), CHANNEL_ID)
+                    .setSmallIcon(R.drawable.nav_message_24)
+                    .setContentTitle("BOOMBOCLAT!")
+                    .setContentText("Aslen is connected successfully <3 ")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true);
+
+            notificationManager.notify(1, builder.build());
+        }
     }
 }

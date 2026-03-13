@@ -5,16 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_msg"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/text_indicator"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BUTTON"
-        android:backgroundTint="#6200EE"
-        android:textColor="#FFFFFF"
+        android:text="Message Fragment"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="70dp"
+
+        />
+
+    <Button
+        android:id="@+id/btn_trigger_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#fcc603"
+
+        android:onClick="sample"
+
+        android:text="TRIGGER TOAST"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-       />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

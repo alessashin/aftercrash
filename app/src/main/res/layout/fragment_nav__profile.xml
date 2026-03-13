@@ -13,7 +13,9 @@
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="70dp"
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_push_notification"
@@ -24,6 +26,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:onClick="sample"
+
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

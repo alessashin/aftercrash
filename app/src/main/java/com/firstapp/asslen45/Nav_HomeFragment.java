@@ -1,12 +1,15 @@
 package com.firstapp.asslen45;
 
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,19 @@ public class Nav_HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav__home, container, false);
+        View view = inflater.inflate(R.layout.fragment_nav__home, container, false);
+
+        // Find the button inside the fragment layout
+        Button btnTriggerToast = view.findViewById(R.id.btn_trigger_toast);
+
+        // Set the click listener for the Toast
+        btnTriggerToast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "This is a TOAST MESSAGE", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
     }
 }
